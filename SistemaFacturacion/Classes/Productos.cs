@@ -223,6 +223,7 @@ namespace SistemaFacturacion.Classes
             return dt = C.Listado("obtenerProductoFacturar", lst);
         }
 
+
         public DataTable BuscarProductosTerminados()
         {
             DataTable dt = new DataTable();
