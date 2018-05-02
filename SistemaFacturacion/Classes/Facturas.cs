@@ -26,6 +26,9 @@ namespace SistemaFacturacion.Classes
         DateTime Mdesde;
         DateTime Mhasta;
         double Mefectivo;
+        double Mdescuento;
+
+
         public string Producto
         {
             get { return Mproducto; }
@@ -48,6 +51,12 @@ namespace SistemaFacturacion.Classes
         {
             get { return Mtotal; }
             set { Mtotal = value; }
+        }
+
+        public double Descuento
+        {
+            get { return Mdescuento; }
+            set { Mdescuento = value; }
         }
 
         public double Efectivo
@@ -126,6 +135,8 @@ namespace SistemaFacturacion.Classes
             lst.Add(new clsParametros("@idUsuario", MidUsuario));
             lst.Add(new clsParametros("@cliente", Mcliente));
             lst.Add(new clsParametros("@efectivo", Mefectivo));
+            lst.Add(new clsParametros("@descuento", Mdescuento));
+
 
 
 

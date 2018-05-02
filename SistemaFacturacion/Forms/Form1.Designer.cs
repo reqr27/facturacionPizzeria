@@ -31,14 +31,14 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.label1 = new System.Windows.Forms.Label();
-            this.msjNoActivado_lbl = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
             this.usuario_lbl = new System.Windows.Forms.Label();
             this.panel4 = new System.Windows.Forms.Panel();
             this.fecha_lbl = new System.Windows.Forms.Label();
-            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.cerrarSesion_link = new System.Windows.Forms.LinkLabel();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.panel5 = new System.Windows.Forms.Panel();
+            this.activado_lbl = new System.Windows.Forms.Label();
             this.cuadreDiario_btn = new System.Windows.Forms.Button();
             this.reportes_btn = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
@@ -47,6 +47,8 @@
             this.config_btn = new System.Windows.Forms.Button();
             this.agregarTipoProducto_btn = new System.Windows.Forms.Button();
             this.facturacion_btn = new System.Windows.Forms.Button();
+            this.activar_btn = new System.Windows.Forms.Button();
+            this.timer2 = new System.Windows.Forms.Timer(this.components);
             this.panel3.SuspendLayout();
             this.panel4.SuspendLayout();
             this.panel5.SuspendLayout();
@@ -63,18 +65,6 @@
             this.label1.Size = new System.Drawing.Size(370, 45);
             this.label1.TabIndex = 5;
             this.label1.Text = "Sistema Facturación";
-            // 
-            // msjNoActivado_lbl
-            // 
-            this.msjNoActivado_lbl.AutoSize = true;
-            this.msjNoActivado_lbl.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(128)))), ((int)(((byte)(185)))));
-            this.msjNoActivado_lbl.Font = new System.Drawing.Font("Bookman Old Style", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.msjNoActivado_lbl.ForeColor = System.Drawing.SystemColors.Control;
-            this.msjNoActivado_lbl.Location = new System.Drawing.Point(3, 6);
-            this.msjNoActivado_lbl.Name = "msjNoActivado_lbl";
-            this.msjNoActivado_lbl.Size = new System.Drawing.Size(218, 14);
-            this.msjNoActivado_lbl.TabIndex = 12;
-            this.msjNoActivado_lbl.Text = "SOFTWARE NO HA SIDO ACTIVADO";
             // 
             // panel3
             // 
@@ -118,11 +108,6 @@
             this.fecha_lbl.TabIndex = 0;
             this.fecha_lbl.Text = "label2";
             // 
-            // timer1
-            // 
-            this.timer1.Interval = 1000;
-            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
-            // 
             // cerrarSesion_link
             // 
             this.cerrarSesion_link.ActiveLinkColor = System.Drawing.Color.Black;
@@ -139,13 +124,19 @@
             this.cerrarSesion_link.Text = "Cerrar Sesión";
             this.cerrarSesion_link.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.cerrarSesion_link_LinkClicked);
             // 
+            // timer1
+            // 
+            this.timer1.Interval = 1000;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
             // panel5
             // 
             this.panel5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(73)))), ((int)(((byte)(94)))));
+            this.panel5.Controls.Add(this.activar_btn);
+            this.panel5.Controls.Add(this.activado_lbl);
             this.panel5.Controls.Add(this.label1);
             this.panel5.Controls.Add(this.button3);
             this.panel5.Controls.Add(this.button2);
-            this.panel5.Controls.Add(this.msjNoActivado_lbl);
             this.panel5.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.panel5.ForeColor = System.Drawing.SystemColors.Control;
@@ -154,6 +145,18 @@
             this.panel5.Size = new System.Drawing.Size(971, 112);
             this.panel5.TabIndex = 14;
             this.panel5.MouseDown += new System.Windows.Forms.MouseEventHandler(this.panel5_MouseDown);
+            // 
+            // activado_lbl
+            // 
+            this.activado_lbl.AutoSize = true;
+            this.activado_lbl.Font = new System.Drawing.Font("Bookman Old Style", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.activado_lbl.ForeColor = System.Drawing.Color.Red;
+            this.activado_lbl.Location = new System.Drawing.Point(12, 9);
+            this.activado_lbl.Name = "activado_lbl";
+            this.activado_lbl.Size = new System.Drawing.Size(410, 24);
+            this.activado_lbl.TabIndex = 40;
+            this.activado_lbl.Text = "SOFTWARE NO HA SIDO ACTIVADO!";
+            this.activado_lbl.Visible = false;
             // 
             // cuadreDiario_btn
             // 
@@ -290,6 +293,28 @@
             this.facturacion_btn.UseVisualStyleBackColor = false;
             this.facturacion_btn.Click += new System.EventHandler(this.facturacion_btn_Click);
             // 
+            // activar_btn
+            // 
+            this.activar_btn.FlatAppearance.BorderSize = 0;
+            this.activar_btn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.activar_btn.Font = new System.Drawing.Font("Bookman Old Style", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.activar_btn.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.activar_btn.Image = global::SistemaFacturacion.Properties.Resources.key;
+            this.activar_btn.Location = new System.Drawing.Point(9, 47);
+            this.activar_btn.Name = "activar_btn";
+            this.activar_btn.Size = new System.Drawing.Size(75, 49);
+            this.activar_btn.TabIndex = 41;
+            this.activar_btn.Text = "Activar";
+            this.activar_btn.TextImageRelation = System.Windows.Forms.TextImageRelation.TextAboveImage;
+            this.activar_btn.UseVisualStyleBackColor = true;
+            this.activar_btn.Visible = false;
+            this.activar_btn.Click += new System.EventHandler(this.activar_btn_Click);
+            // 
+            // timer2
+            // 
+            this.timer2.Interval = 20000;
+            this.timer2.Tick += new System.EventHandler(this.timer2_Tick);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -331,7 +356,6 @@
         private System.Windows.Forms.Button facturacion_btn;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Label usuario_lbl;
-        private System.Windows.Forms.Label msjNoActivado_lbl;
         private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.Label fecha_lbl;
         private System.Windows.Forms.Timer timer1;
@@ -342,6 +366,9 @@
         private System.Windows.Forms.Button config_btn;
         private System.Windows.Forms.Button reportes_btn;
         private System.Windows.Forms.Button cuadreDiario_btn;
+        private System.Windows.Forms.Label activado_lbl;
+        private System.Windows.Forms.Button activar_btn;
+        private System.Windows.Forms.Timer timer2;
     }
 }
 

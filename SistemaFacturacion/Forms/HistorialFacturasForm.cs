@@ -91,6 +91,8 @@ namespace SistemaFacturacion.Forms
             {
                 noFactura_txt.Text = "0";
             }
+
+            dtgHistorial();
             
         }
 
@@ -225,6 +227,16 @@ namespace SistemaFacturacion.Forms
         private void button2_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void desde_dtp_ValueChanged(object sender, EventArgs e)
+        {
+            dtgHistorial();
+        }
+
+        private void cliente_txt_TextChanged(object sender, EventArgs e)
+        {
+            dtgHistorial();
         }
     }
 

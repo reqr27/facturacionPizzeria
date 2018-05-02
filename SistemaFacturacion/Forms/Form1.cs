@@ -50,26 +50,7 @@ namespace SistemaFacturacion
             Properties.Settings.Default.Save();
             //panel3.Location = new Point(this.ClientSize.Width / 2 - panel3.Size.Width / 2);
             //panel3.Anchor = AnchorStyles.None;
-            string mensaje = U.RevisarSoftwareActivado();
-            if (mensaje == "0")
-            {
-               
-                agregarTipoProducto_btn.Enabled = false;
-                
-                
-                entradaProductos_btn.Enabled = false;
-                
-                facturacion_btn.Enabled = false;
-                
-                
-                
-               
-                cuadreDiario_btn.Enabled = false;
-            }
-            else
-            {
-                msjNoActivado_lbl.Visible = false;
-            }
+            RevisarActivado();
 
         }
 
@@ -159,21 +140,7 @@ namespace SistemaFacturacion
         {
             ActivarSoftwareForm form = new ActivarSoftwareForm();
             form.ShowDialog();
-            if (Program.SoftwareActivated)
-            {
-                
-                agregarTipoProducto_btn.Enabled = true;
-                
-                
-                entradaProductos_btn.Enabled = true;
-                
-                facturacion_btn.Enabled = true;
-                
-                
-                
-                cuadreDiario_btn.Enabled = true;
-                msjNoActivado_lbl.Visible = false;
-            }
+            RevisarActivado();
         }
 
        
@@ -249,6 +216,116 @@ namespace SistemaFacturacion
             {
                 ReleaseCapture();
                 SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
+            }
+        }
+
+        private void activar_btn_Click(object sender, EventArgs e)
+        {
+            ActivarSoftwareForm frm = new ActivarSoftwareForm();
+            frm.ShowDialog();
+            RevisarActivado();
+        }
+
+        public void RevisarActivado()
+        {
+            string mensaje = U.RevisarSoftwareActivado();
+            if (mensaje == "0")
+            {
+                timer2.Stop();
+                agregarTipoProducto_btn.Enabled = false;
+                config_btn.Enabled = false;
+                reportes_btn.Enabled = false;
+
+                entradaProductos_btn.Enabled = false;
+
+                facturacion_btn.Enabled = false;
+
+                cuadreDiario_btn.Enabled = false;
+                activado_lbl.Visible = true;
+                activar_btn.Visible = true;
+            }
+            else if (mensaje == "Trial")
+            {
+                DataTable dt = new DataTable();
+                dt = U.ObtenerDiasActivo();
+
+                string dias = dt.Rows[0]["DIAS"].ToString();
+                if(dias == "0")
+                {
+                    timer2.Stop();
+                    agregarTipoProducto_btn.Enabled = false;
+                    config_btn.Enabled = false;
+                    reportes_btn.Enabled = false;
+
+                    entradaProductos_btn.Enabled = false;
+
+                    facturacion_btn.Enabled = false;
+                    activado_lbl.Text = "Version De Prueba ha vencido";
+                    cuadreDiario_btn.Enabled = false;
+                    activado_lbl.Visible = true;
+                    activar_btn.Visible = true;
+                    CerrarForms();
+                }
+                else
+                {
+                    timer2.Start();
+                    agregarTipoProducto_btn.Enabled = false;
+                    config_btn.Enabled = true;
+                    reportes_btn.Enabled = true;
+
+                    entradaProductos_btn.Enabled = true;
+
+                    facturacion_btn.Enabled = true;
+
+                    cuadreDiario_btn.Enabled = true;
+                    activado_lbl.Visible = true;
+                    activado_lbl.Text = "Version De Prueba - Vence en: " + dias + " días";
+                    activar_btn.Visible = true;
+                }
+                
+
+                
+            }
+
+            else if (mensaje == "Full")
+            {
+                timer2.Stop();
+                agregarTipoProducto_btn.Enabled = false;
+                config_btn.Enabled = true;
+                reportes_btn.Enabled = true;
+
+                entradaProductos_btn.Enabled = true;
+
+                facturacion_btn.Enabled = true;
+
+                cuadreDiario_btn.Enabled = true;
+                activado_lbl.Visible = false;
+                
+                activar_btn.Visible = false;
+
+
+            }
+        }
+
+        private void timer2_Tick(object sender, EventArgs e)
+        {
+            timer2.Stop();
+            RevisarActivado();
+            timer2.Start();
+        }
+
+        public void CerrarForms()
+        {
+            List<Form> openForms = new List<Form>();
+
+            foreach (Form f in Application.OpenForms)
+                openForms.Add(f);
+
+            foreach (Form f in openForms)
+            {
+
+                if (f.Name != "Form1" && f.Name != "LoginForm" && f.Name != "ActivarSoftwareForm")
+                    f.Close();
             }
         }
     }

@@ -71,6 +71,7 @@ namespace SistemaFacturacion.Forms
             {
                 this.Text = "Cuadre Caja";
                 filtros_panel.Visible = false;
+                this.WindowState = FormWindowState.Maximized;
                 CuadreCaja();
             }
 
@@ -101,7 +102,7 @@ namespace SistemaFacturacion.Forms
             reportViewer1.ProcessingMode = ProcessingMode.Local;
             lc = reportViewer1.LocalReport;
             //lc.ReportPath = "Reportes\\FacturaCliente.rdlc";
-            lc.ReportPath = "Reportes\\Factura.rdlc";
+            lc.ReportPath = "Reportes\\FacturaCliente.rdlc";
             facturacionDataSet ds = new facturacionDataSet();
             facturacionDataSetTableAdapters.facturaClienteTableAdapter rds = new facturacionDataSetTableAdapters.facturaClienteTableAdapter();
             facturacionDataSetTableAdapters.obtenerFacturaTableAdapter rds1 = new facturacionDataSetTableAdapters.obtenerFacturaTableAdapter();
@@ -119,9 +120,11 @@ namespace SistemaFacturacion.Forms
             reportViewer1.LocalReport.SetParameters(parametros);
             lc.DataSources.Add(rd);
             lc.DataSources.Add(rd1);
-            
+
+            AutoPrintCls atp = new AutoPrintCls(lc);
+            atp.Print();
             //this.reportViewer1.RefreshReport();
-            lc.PrintToPrinter();
+            //lc.PrintToPrinter();
             this.Close();
         }
 
@@ -131,7 +134,7 @@ namespace SistemaFacturacion.Forms
             reportViewer1.ProcessingMode = ProcessingMode.Local;
             lc = reportViewer1.LocalReport;
             //lc.ReportPath = "Reportes\\FacturaCliente.rdlc";
-            lc.ReportPath = "Reportes\\Factura.rdlc";
+            lc.ReportPath = "Reportes\\FacturaCliente.rdlc";
             facturacionDataSet ds = new facturacionDataSet();
             facturacionDataSetTableAdapters.facturaClienteTableAdapter rds = new facturacionDataSetTableAdapters.facturaClienteTableAdapter();
             facturacionDataSetTableAdapters.obtenerFacturaTableAdapter rds1 = new facturacionDataSetTableAdapters.obtenerFacturaTableAdapter();

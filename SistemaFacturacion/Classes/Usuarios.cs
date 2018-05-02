@@ -31,6 +31,7 @@ namespace SistemaFacturacion.Classes
         bool McomponentesProductos;
         bool MrepEntrada;
         bool MrepSalida;
+        string MtipoActivacion;
 
         public int idUsuario
         {
@@ -60,6 +61,12 @@ namespace SistemaFacturacion.Classes
         {
             get { return MtipoUsuario; }
             set { MtipoUsuario = value; }
+        }
+
+        public string TipoActivacion
+        {
+            get { return MtipoActivacion; }
+            set { MtipoActivacion = value; }
         }
 
         public string Nombre
@@ -274,7 +281,7 @@ namespace SistemaFacturacion.Classes
             List<clsParametros> lst = new List<clsParametros>();
 
             lst.Add(new clsParametros("@mensaje", "", SqlDbType.VarChar, ParameterDirection.Output, 50));
-           
+            lst.Add(new clsParametros("@tipo", MtipoActivacion));
             C.EjecutarSP("activarSoftware", ref lst);
             mensaje = lst[0].Valor.ToString();
            
@@ -292,6 +299,14 @@ namespace SistemaFacturacion.Classes
             mensaje = lst[0].Valor.ToString();
 
             return mensaje;
+        }
+
+        public DataTable ObtenerDiasActivo()
+        {
+            DataTable dt = new DataTable();
+            List<clsParametros> lst = new List<clsParametros>();
+            //lst.Add(new clsParametros("@idFactura", Mid));
+            return dt = C.Listado("obtener_dias_activo", lst);
         }
 
     }

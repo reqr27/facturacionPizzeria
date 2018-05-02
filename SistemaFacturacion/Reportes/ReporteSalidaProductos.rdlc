@@ -294,7 +294,6 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -377,7 +376,7 @@
                               <Value>=Fields!CANTIDAD.Value</Value>
                               <Style>
                                 <FontSize>9pt</FontSize>
-                                <Format>0.00;(0.00)</Format>
+                                <Format>N2</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -412,7 +411,7 @@
                               <Value>=Fields!COSTO.Value</Value>
                               <Style>
                                 <FontSize>9pt</FontSize>
-                                <Format>0.00;(0.00)</Format>
+                                <Format>N2</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -447,7 +446,7 @@
                               <Value>=Fields!COSTO_TOTAL.Value</Value>
                               <Style>
                                 <FontSize>9pt</FontSize>
-                                <Format>0.00;(0.00)</Format>
+                                <Format>N2</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -504,77 +503,8 @@
           </Border>
         </Style>
       </Tablix>
-      <Textbox Name="Textbox20">
-        <CanGrow>true</CanGrow>
-        <KeepTogether>true</KeepTogether>
-        <Paragraphs>
-          <Paragraph>
-            <TextRuns>
-              <TextRun>
-                <Value>COSTO TOTAL ($RD):</Value>
-                <Style>
-                  <FontWeight>Bold</FontWeight>
-                </Style>
-              </TextRun>
-            </TextRuns>
-            <Style />
-          </Paragraph>
-        </Paragraphs>
-        <rd:DefaultName>Textbox20</rd:DefaultName>
-        <Top>0.77951in</Top>
-        <Left>4.88022in</Left>
-        <Height>0.25in</Height>
-        <Width>1.48958in</Width>
-        <ZIndex>1</ZIndex>
-        <Style>
-          <Border>
-            <Style>None</Style>
-          </Border>
-          <PaddingLeft>2pt</PaddingLeft>
-          <PaddingRight>2pt</PaddingRight>
-          <PaddingTop>2pt</PaddingTop>
-          <PaddingBottom>2pt</PaddingBottom>
-        </Style>
-      </Textbox>
-      <Textbox Name="Textbox28">
-        <CanGrow>true</CanGrow>
-        <KeepTogether>true</KeepTogether>
-        <Paragraphs>
-          <Paragraph>
-            <TextRuns>
-              <TextRun>
-                <Value>=Sum(Fields!COSTO_TOTAL.Value)</Value>
-                <Style>
-                  <FontWeight>Bold</FontWeight>
-                  <Format>0.00;(0.00)</Format>
-                  <TextDecoration>Underline</TextDecoration>
-                </Style>
-              </TextRun>
-            </TextRuns>
-            <Style>
-              <TextAlign>Center</TextAlign>
-            </Style>
-          </Paragraph>
-        </Paragraphs>
-        <rd:DefaultName>Textbox26</rd:DefaultName>
-        <Top>0.77951in</Top>
-        <Left>6.49826in</Left>
-        <Height>0.25in</Height>
-        <Width>1.43403in</Width>
-        <ZIndex>2</ZIndex>
-        <Style>
-          <Border>
-            <Color>LightGrey</Color>
-            <Style>None</Style>
-          </Border>
-          <PaddingLeft>2pt</PaddingLeft>
-          <PaddingRight>2pt</PaddingRight>
-          <PaddingTop>2pt</PaddingTop>
-          <PaddingBottom>2pt</PaddingBottom>
-        </Style>
-      </Textbox>
     </ReportItems>
-    <Height>2in</Height>
+    <Height>0.63542in</Height>
     <Style />
   </Body>
   <Width>8.28472in</Width>
@@ -632,14 +562,16 @@
                   </Style>
                 </TextRun>
               </TextRuns>
-              <Style />
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox11</rd:DefaultName>
           <Top>0.84722in</Top>
-          <Left>6.48437in</Left>
+          <Left>6.34895in</Left>
           <Height>0.25in</Height>
-          <Width>1.45834in</Width>
+          <Width>1.71876in</Width>
           <ZIndex>1</ZIndex>
           <Style>
             <Border>
@@ -685,7 +617,9 @@
                   </Style>
                 </TextRun>
               </TextRuns>
-              <Style />
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
             </Paragraph>
             <Paragraph>
               <TextRuns>
@@ -698,7 +632,7 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox12</rd:DefaultName>
-          <Top>0.59375in</Top>
+          <Top>0.15499in</Top>
           <Left>6.60937in</Left>
           <Height>0.19792in</Height>
           <Width>1.45834in</Width>
@@ -830,8 +764,90 @@
         <Border>
           <Style>None</Style>
         </Border>
+        <BackgroundColor>#dfe6e9</BackgroundColor>
       </Style>
     </PageHeader>
+    <PageFooter>
+      <Height>0.39583in</Height>
+      <PrintOnFirstPage>true</PrintOnFirstPage>
+      <PrintOnLastPage>true</PrintOnLastPage>
+      <ReportItems>
+        <Textbox Name="Textbox20">
+          <CanGrow>true</CanGrow>
+          <KeepTogether>true</KeepTogether>
+          <Paragraphs>
+            <Paragraph>
+              <TextRuns>
+                <TextRun>
+                  <Value>COSTO TOTAL ($RD):</Value>
+                  <Style>
+                    <FontWeight>Bold</FontWeight>
+                  </Style>
+                </TextRun>
+              </TextRuns>
+              <Style />
+            </Paragraph>
+          </Paragraphs>
+          <rd:DefaultName>Textbox20</rd:DefaultName>
+          <Top>0.06944in</Top>
+          <Left>5.01564in</Left>
+          <Height>0.25in</Height>
+          <Width>1.48958in</Width>
+          <Style>
+            <Border>
+              <Style>None</Style>
+            </Border>
+            <PaddingLeft>2pt</PaddingLeft>
+            <PaddingRight>2pt</PaddingRight>
+            <PaddingTop>2pt</PaddingTop>
+            <PaddingBottom>2pt</PaddingBottom>
+          </Style>
+        </Textbox>
+        <Textbox Name="Textbox28">
+          <CanGrow>true</CanGrow>
+          <KeepTogether>true</KeepTogether>
+          <Paragraphs>
+            <Paragraph>
+              <TextRuns>
+                <TextRun>
+                  <Value>=Sum(Fields!COSTO_TOTAL.Value, "DataSet1")</Value>
+                  <Style>
+                    <FontWeight>Bold</FontWeight>
+                    <Format>N2</Format>
+                    <TextDecoration>Underline</TextDecoration>
+                  </Style>
+                </TextRun>
+              </TextRuns>
+              <Style>
+                <TextAlign>Center</TextAlign>
+              </Style>
+            </Paragraph>
+          </Paragraphs>
+          <rd:DefaultName>Textbox26</rd:DefaultName>
+          <Top>0.06944in</Top>
+          <Left>6.63368in</Left>
+          <Height>0.25in</Height>
+          <Width>1.43403in</Width>
+          <ZIndex>1</ZIndex>
+          <Style>
+            <Border>
+              <Color>LightGrey</Color>
+              <Style>None</Style>
+            </Border>
+            <PaddingLeft>2pt</PaddingLeft>
+            <PaddingRight>2pt</PaddingRight>
+            <PaddingTop>2pt</PaddingTop>
+            <PaddingBottom>2pt</PaddingBottom>
+          </Style>
+        </Textbox>
+      </ReportItems>
+      <Style>
+        <Border>
+          <Style>None</Style>
+        </Border>
+        <BackgroundColor>#dfe6e9</BackgroundColor>
+      </Style>
+    </PageFooter>
     <LeftMargin>1in</LeftMargin>
     <RightMargin>1in</RightMargin>
     <TopMargin>1in</TopMargin>

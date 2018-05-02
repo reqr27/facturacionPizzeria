@@ -8,11 +8,17 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using SistemaFacturacion.Classes;
+using System.Runtime.InteropServices;
+using Microsoft.PointOfService;
+
 
 namespace SistemaFacturacion.Forms
 {
     public partial class FacturarForm : Form
     {
+        CashDrawer myCashDrawer;
+        PosExplorer explorer;
+
         Productos P = new Productos();
         Facturas F = new Facturas();
         double cantidadOrden;
@@ -24,10 +30,30 @@ namespace SistemaFacturacion.Forms
 
         private void FacturarForm_Load(object sender, EventArgs e)
         {
+            //explorer = new PosExplorer();
+            //DeviceInfo ObjDevicesInfo = explorer.GetDevice("CashDrawer");
+            //myCashDrawer = (CashDrawer)explorer.CreateInstance(ObjDevicesInfo);
+
             numeroFactura_txt.Text = (Convert.ToInt32(F.NumeroFacturaSiguiente())).ToString("0000000");
-            
-            CrearDatagrid();
+            cant_numtxt.Minimum = 1;
+            cant_numtxt.Maximum = 100;
+            //CrearDatagrid();
             CalcularTotalOrden();
+            LlenarDataGrid();
+            
+        }
+
+        public void LlenarDataGrid()
+        {
+            productos_dtg.DataSource = null;
+            DataTable dt = new DataTable();
+            P.Producto = buscar_producto_txt.Text;
+            dt = P.BuscarProductosTerminadosFacturar();
+            
+            productos_dtg.DataSource = dt;
+            productos_dtg.Columns[3].DefaultCellStyle.Format = "N2";
+            productos_dtg.Columns[4].Visible = false;
+            productos_dtg.Columns[5].Visible = false;
         }
 
         public void CrearDatagrid()
@@ -120,26 +146,26 @@ namespace SistemaFacturacion.Forms
         EventArgs e)
         {
            
-            if (this.orden_dtg.IsCurrentCellDirty)
-            {
-                // This fires the cell value changed handler below
-                orden_dtg.CommitEdit(DataGridViewDataErrorContexts.Commit);
-            }
+            //if (this.orden_dtg.IsCurrentCellDirty)
+            //{
+            //    // This fires the cell value changed handler below
+            //    orden_dtg.CommitEdit(DataGridViewDataErrorContexts.Commit);
+            //}
         }
 
         private void orden_dtg_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
             // My combobox column is the second one so I hard coded a 1, flavor to taste
-            if(e.ColumnIndex == 0)
-            {
-                DataGridViewComboBoxCell cb = (DataGridViewComboBoxCell)orden_dtg.Rows[e.RowIndex].Cells[0];
-                if (cb.Value != null)
-                {
-                    fillDatagrid();
-                    CalcularTotalOrden();
-                    orden_dtg.Invalidate();
-                }
-            }
+            //if(e.ColumnIndex == 0)
+            //{
+            //    DataGridViewComboBoxCell cb = (DataGridViewComboBoxCell)orden_dtg.Rows[e.RowIndex].Cells[0];
+            //    if (cb.Value != null)
+            //    {
+            //        fillDatagrid();
+            //        CalcularTotalOrden();
+            //        orden_dtg.Invalidate();
+            //    }
+            //}
             
             
                 
@@ -148,35 +174,43 @@ namespace SistemaFacturacion.Forms
         public void CalcularTotalOrden()
         {
             double total = 0;
-            if (orden_dtg.Rows.Count > 1)
+            double porcentage = 0;
+            
+            if(descuento_txt.Text.Trim() != "")
+            {
+                porcentage = (Convert.ToDouble(descuento_txt.Text) / 100);
+            }
+            if (orden_dtg.Rows.Count > 0)
             {
                 foreach (DataGridViewRow row in orden_dtg.Rows)
                 {
-                    total += Convert.ToDouble(row.Cells[2].Value);
+                    total += Convert.ToDouble(row.Cells[3].Value);
 
                 }
                 total_lbl.Text = total.ToString("N2");
-                efectivo_txt.Text = total.ToString("N2");
-                devuelta_lbl.Text = "0.00";
+                
+
+                totalPagar_lbl.Text = (total - (total * porcentage)).ToString("N2");
+                totalPagar2_lbl.Text = totalPagar_lbl.Text;
+                efectivo_txt.Text = totalPagar_lbl.Text;
+                devuelta_lbl.Text = (Convert.ToDouble(totalPagar_lbl.Text) - Convert.ToDouble(efectivo_txt.Text)).ToString("N2");
+
             }
             else
             {
                 total_lbl.Text = "0.00";
+                totalPagar2_lbl.Text = "0.00";
                 efectivo_txt.Text = "0.00";
                 devuelta_lbl.Text = "0.00";
+                totalPagar_lbl.Text = "0.00";
+                descuento_lbl.Text = "0.00";
             }
+
+            double descuento_dinero = Convert.ToDouble(total_lbl.Text) * Convert.ToDouble(descuento_txt.Text) / 100;
+            descuento_lbl.Text = descuento_dinero.ToString("N2");
         }
 
-        private void eliminar_btn_Click(object sender, EventArgs e)
-        {
-            if(orden_dtg.Rows.Count > 0)
-            {
-                int index = orden_dtg.CurrentCell.RowIndex;
-                orden_dtg.Rows.RemoveAt(index);
-                CalcularTotalOrden();
-            }
-            
-        }
+        
 
         private void crear_factura_btn_Click(object sender, EventArgs e)
         {
@@ -207,7 +241,7 @@ namespace SistemaFacturacion.Forms
         {
             double n;
             bool efectivo = double.TryParse(efectivo_txt.Text, out n);
-            
+            bool descuento = double.TryParse(descuento_txt.Text, out n);
             string msj = "OK";
 
             if (cliente_txt.Text.Trim() == "")
@@ -215,7 +249,7 @@ namespace SistemaFacturacion.Forms
                 msj = "Nombre del Cliente es Necesario";
 
             }
-            else if (orden_dtg.Rows.Count == 1)
+            else if (orden_dtg.Rows.Count == 0)
             {
                 msj = "No hay productos para facturar";
             }
@@ -224,10 +258,17 @@ namespace SistemaFacturacion.Forms
                 msj = "Campo Efectivo debe ser numérico";
             }
 
-            else if (Convert.ToDouble(efectivo_txt.Text) - Convert.ToDouble(total_lbl.Text) < 0)
+            else if (!descuento)
+            {
+                msj = "Campo Descuentp debe ser numérico";
+            }
+
+            else if (Convert.ToDouble(efectivo_txt.Text) - Convert.ToDouble(totalPagar_lbl.Text) < 0)
             {
                 msj = "Efectivo debe ser mayor o igual que total a pagar";
             }
+
+
             else
             {
                 msj = "OK";
@@ -244,6 +285,7 @@ namespace SistemaFacturacion.Forms
             F.idUsuario = Program.GidUsuario;
             F.Total = Convert.ToDouble(total_lbl.Text);
             F.Efectivo = Convert.ToDouble(efectivo_txt.Text);
+            F.Descuento = Convert.ToDouble(descuento_txt.Text);
             msj = F.RegistrarFactura();
             if(msj == "1")
             {
@@ -292,19 +334,19 @@ namespace SistemaFacturacion.Forms
         public string InsertarFacturaDetalles()
         {
             string msj = "";
-            for(int i = 0; i < orden_dtg.Rows.Count - 1;i++ )
+            for(int i = 0; i < orden_dtg.Rows.Count;i++ )
             {
-                F.idProducto = Convert.ToInt32(orden_dtg.Rows[i].Cells[3].Value);
+                F.idProducto = Convert.ToInt32(orden_dtg.Rows[i].Cells[5].Value);
                 F.Cantidad = Convert.ToDouble(orden_dtg.Rows[i].Cells[1].Value);
-                F.idTipoUnidad = Convert.ToInt32(orden_dtg.Rows[i].Cells[4].Value);
-                F.Precio = Convert.ToDouble(orden_dtg.Rows[i].Cells[5].Value);
-                F.SubTotal = Convert.ToDouble(orden_dtg.Rows[i].Cells[2].Value);
+                F.idTipoUnidad = Convert.ToInt32(orden_dtg.Rows[i].Cells[6].Value);
+                F.Precio = Convert.ToDouble(orden_dtg.Rows[i].Cells[2].Value);
+                F.SubTotal = Convert.ToDouble(orden_dtg.Rows[i].Cells[3].Value);
                 msj = F.RegistrarFacturaDetalles();
                 if(msj != "0" )
                 {
                     msj = "OK";
-                    Program.GtipoProductoId = Convert.ToInt32(orden_dtg.Rows[i].Cells[6].Value);
-                    string restarMsj = RestarInventario(Convert.ToInt32(orden_dtg.Rows[i].Cells[3].Value) , Convert.ToDouble(orden_dtg.Rows[i].Cells[1].Value));
+                    Program.GtipoProductoId = Convert.ToInt32(orden_dtg.Rows[i].Cells[7].Value);
+                    string restarMsj = RestarInventario(Convert.ToInt32(orden_dtg.Rows[i].Cells[5].Value) , Convert.ToDouble(orden_dtg.Rows[i].Cells[1].Value));
                     if (restarMsj != "1")
                     {
                         MessageBox.Show(restarMsj, "Sistema Facturación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -333,7 +375,7 @@ namespace SistemaFacturacion.Forms
             foreach (DataGridViewRow row in orden_dtg.Rows)
             {
                 cantidadProd = Convert.ToDouble(row.Cells[1].Value);
-                P.idProducto = Convert.ToInt32(row.Cells[3].Value);
+                P.idProducto = Convert.ToInt32(row.Cells[5].Value);
                 dt = P.ObtenerComponentesProducto();
                 for (int i = 0; i < dt.Rows.Count; i++)
                 {
@@ -380,14 +422,14 @@ namespace SistemaFacturacion.Forms
             string msj = "";
             int agregado = 0;
             
-            string Prod;
-            if (orden_dtg.CurrentRow.Cells[5].Value.ToString() == "3")
+           
+            if (orden_dtg.CurrentRow.Cells[7].Value.ToString() == "3")
             {
                 DataTable dt = new DataTable();
-                string bebida = orden_dtg.CurrentRow.Cells[1].Value.ToString();
+                string bebida = orden_dtg.CurrentRow.Cells[0].Value.ToString();
                 foreach (DataGridViewRow row in orden_dtg.Rows)
                 {
-                    if (row.Cells[1].Value.ToString() == bebida)
+                    if (row.Cells[0].Value.ToString() == bebida)
                     {
                         agregado = Convert.ToInt32(row.Cells[1].Value);
                         break;
@@ -505,7 +547,7 @@ namespace SistemaFacturacion.Forms
                 {
                     double efectivo = Convert.ToDouble(efectivo_txt.Text);
                     //efectivo_txt.Text = efectivo.ToString("N2");
-                    devuelta_lbl.Text = (efectivo - Convert.ToDouble(total_lbl.Text)).ToString("N2");
+                    devuelta_lbl.Text = (efectivo - Convert.ToDouble(totalPagar_lbl.Text)).ToString("N2");
                 }
                 catch (Exception ex)
                 {
@@ -574,27 +616,26 @@ namespace SistemaFacturacion.Forms
             double cantidadProd;
             int index;
             DataTable dt = new DataTable();
-            foreach (DataGridViewRow row in orden_dtg.Rows)
-            {
-                cantidadProd = Convert.ToDouble(row.Cells[1].Value);
-                P.idProducto = Convert.ToInt32(row.Cells[3].Value);
-                dt = P.ObtenerComponentesProducto();
-                for (int i = 0; i < dt.Rows.Count; i++)
-                {
-                    idIngrediente = Convert.ToInt32(dt.Rows[i]["ID_INGREDIENTE"]);
-                    if (idIngredienteArray.Contains(idIngrediente))
-                    {
-                        index = idIngredienteArray.IndexOf(idIngrediente);
-                        cantidadArray[index] += (Convert.ToDouble(dt.Rows[i]["CANTIDAD"]) * cantidadProd);
-                    }
-                    else
-                    {
-                        idIngredienteArray.Add(idIngrediente);
-                        cantidadArray.Add(Convert.ToInt32(dt.Rows[i]["CANTIDAD"]) * cantidadProd);
-                    }
 
+            cantidadProd = Convert.ToDouble(cant_numtxt.Value);
+            P.idProducto = Convert.ToInt32(productos_dtg.CurrentRow.Cells[0].Value);
+
+            dt = P.ObtenerComponentesProducto();
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                idIngrediente = Convert.ToInt32(dt.Rows[i]["ID_INGREDIENTE"]);
+                if (idIngredienteArray.Contains(idIngrediente))
+                {
+                    index = idIngredienteArray.IndexOf(idIngrediente);
+                    cantidadArray[index] += (Convert.ToDouble(dt.Rows[i]["CANTIDAD"]) * cantidadProd);
+                }
+                else
+                {
+                    idIngredienteArray.Add(idIngrediente);
+                    cantidadArray.Add(Convert.ToInt32(dt.Rows[i]["CANTIDAD"]) * cantidadProd);
                 }
             }
+           
 
             string nombre = "";
 
@@ -623,21 +664,13 @@ namespace SistemaFacturacion.Forms
         public string RevisarExistenciaBebidasOrden()
         {
             string msj = "";
-            double agregado = 0;
-            if (orden_dtg.CurrentRow.Cells[6].Value.ToString() == "3")
+            double agregado = Convert.ToDouble(cant_numtxt.Value);
+            if (productos_dtg.CurrentRow.Cells[5].Value.ToString() == "3")
             {
                 DataTable dt = new DataTable();
-                string bebida = orden_dtg.CurrentRow.Cells[0].Value.ToString();
-                foreach (DataGridViewRow row in orden_dtg.Rows)
-                {
-                    if (row.Cells[0].Value.ToString() == bebida)
-                    {
-                        agregado = Convert.ToDouble(row.Cells[1].Value);
-                        break;
-                    }
-                }
+                
 
-                P.idProducto = Convert.ToInt32(orden_dtg.CurrentRow.Cells[3].Value);
+                P.idProducto = Convert.ToInt32(productos_dtg.CurrentRow.Cells[0].Value);
                 dt = P.ObtenerExistenciaBebidas();
                 if (dt.Rows.Count > 0)
                 {
@@ -746,6 +779,149 @@ namespace SistemaFacturacion.Forms
             {
                 cantidadOrden = Convert.ToDouble(orden_dtg.CurrentRow.Cells[1].Value);
             }
+        }
+
+        private void descuento_txt_TextChanged(object sender, EventArgs e)
+        {
+            if(descuento_txt.Text.Length == 0)
+            {
+                descuento_txt.Text = "0";
+                descuento_txt.SelectionStart = descuento_txt.Text.Length + 1;
+            }
+            CalcularTotalOrden();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            this.WindowState = FormWindowState.Minimized;
+        }
+
+        private void buscar_producto_txt_TextChanged(object sender, EventArgs e)
+        {
+            LlenarDataGrid();
+        }
+
+
+        public void AgregarItemOrden()
+        {
+            orden_dtg.Rows.Add();
+
+            int row = orden_dtg.Rows.Count;
+            orden_dtg.Rows[row - 1].Cells[5].Value = productos_dtg.CurrentRow.Cells[0].Value.ToString(); // idproducto
+            orden_dtg.Rows[row - 1].Cells[0].Value = productos_dtg.CurrentRow.Cells[1].Value.ToString();// producto
+            orden_dtg.Rows[row - 1].Cells[1].Value = cant_numtxt.Value; // cantidad
+            orden_dtg.Rows[row - 1].Cells[2].Value = productos_dtg.CurrentRow.Cells[3].Value.ToString(); // precio unidad
+
+            orden_dtg.Rows[row - 1].Cells[3].Value = Convert.ToDouble(productos_dtg.CurrentRow.Cells[3].Value.ToString()) * Convert.ToDouble(cant_numtxt.Value); // precio total
+            orden_dtg.Rows[row - 1].Cells[6].Value = productos_dtg.CurrentRow.Cells[4].Value.ToString(); // idUnidad
+            orden_dtg.Rows[row - 1].Cells[7].Value = productos_dtg.CurrentRow.Cells[5].Value.ToString(); // idTipo
+
+            orden_dtg.Columns[1].DefaultCellStyle.Format = "N2";
+            orden_dtg.Columns[2].DefaultCellStyle.Format = "N2";
+            orden_dtg.Columns[3].DefaultCellStyle.Format = "N2";
+
+            CalcularTotalOrden();
+        }
+
+        private void orden_dtg_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
+        {
+            if (e.RowIndex == orden_dtg.NewRowIndex || e.RowIndex < 0)
+                return;
+
+            if (e.ColumnIndex == orden_dtg.Columns["dataGridViewDeleteButton"].Index)
+            {
+                var image = Properties.Resources.eliminar; //An image
+                e.Paint(e.CellBounds, DataGridViewPaintParts.All);
+                var x = e.CellBounds.Left + (e.CellBounds.Width - image.Width) / 2;
+                var y = e.CellBounds.Top + (e.CellBounds.Height - image.Height) / 2;
+                e.Graphics.DrawImage(image, new Point(x, y));
+
+                e.Handled = true;
+            }
+        }
+
+        private void agregar_btn_Click(object sender, EventArgs e)
+        {
+            bool repeated = false;
+            foreach (DataGridViewRow row in orden_dtg.Rows)
+            {
+                int idProducto = Convert.ToInt32(productos_dtg.CurrentRow.Cells[0].Value);
+                if(idProducto == Convert.ToInt32(row.Cells[5].Value))
+                {
+                    repeated = true;
+                }
+            }
+            if (!repeated)
+            {
+                string msj = RevisarExistenciaComponentesOrden();
+                string msj1 = RevisarExistenciaBebidasOrden();
+                if (msj == "" && msj1 == "")
+                {
+                    AgregarItemOrden();
+                }
+                else
+                {
+                    MessageBox.Show(msj + msj1, "Sistema Facturacion", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+
+                }
+
+
+            }
+            else
+            {
+                MessageBox.Show("Ya se existe este item en la orden actual", "Sistema Facturacion", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
+
+               
+        }
+
+        private void orden_dtg_CellClick_1(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex == orden_dtg.NewRowIndex || e.RowIndex < 0)
+                return;
+
+            //Check if click is on specific column 
+            if (e.ColumnIndex == orden_dtg.Columns["dataGridViewDeleteButton"].Index)
+            {
+                //Put some logic here, for example to remove row from your binding list.
+                orden_dtg.Rows.RemoveAt(e.RowIndex);
+                CalcularTotalOrden();
+            }
+        }
+
+        private void openCashDrawer()
+        {
+            //Metodo 1
+            byte[] codeOpenCashDrawer = new byte[] { 27, 112, 48, 55, 121 };
+            IntPtr pUnmanagedBytes = new IntPtr(0);
+            pUnmanagedBytes = Marshal.AllocCoTaskMem(5);
+            Marshal.Copy(codeOpenCashDrawer, 0, pUnmanagedBytes, 5);
+            RawPrinterHelper.SendBytesToPrinter("EPSON TM-T88V Receipt Invoice", pUnmanagedBytes, 5);
+            Marshal.FreeCoTaskMem(pUnmanagedBytes);
+            
+
+        }
+
+        public void openCashDrawer2()
+        {
+            myCashDrawer.Open();
+            myCashDrawer.Claim(1000);
+            myCashDrawer.DeviceEnabled = true;
+            myCashDrawer.OpenDrawer();
+            myCashDrawer.DeviceEnabled = false;
+            myCashDrawer.Release();
+            myCashDrawer.Close();
+            //myCashDrawer.CapStatus
+        }
+
+        private void productos_dtg_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            agregar_btn_Click(sender, e);
         }
     }
 

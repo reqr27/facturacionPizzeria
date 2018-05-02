@@ -5,7 +5,7 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SistemaFacturacion", "SistemaFacturacion\SistemaFacturacion.csproj", "{EF3C2660-541A-4312-9E75-9403B8910501}"
 EndProject
-Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Setup", "Setup\Setup.vdproj", "{CE6AF26E-475C-4A79-AC36-97A13EAA867D}"
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "FactPiz", "FactPiz\FactPiz.vdproj", "{564D4DFD-8A02-4B39-99F9-C03A87FF47C4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,8 +17,8 @@ Global
 		{EF3C2660-541A-4312-9E75-9403B8910501}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EF3C2660-541A-4312-9E75-9403B8910501}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EF3C2660-541A-4312-9E75-9403B8910501}.Release|Any CPU.Build.0 = Release|Any CPU
-		{CE6AF26E-475C-4A79-AC36-97A13EAA867D}.Debug|Any CPU.ActiveCfg = Debug
-		{CE6AF26E-475C-4A79-AC36-97A13EAA867D}.Release|Any CPU.ActiveCfg = Release
+		{564D4DFD-8A02-4B39-99F9-C03A87FF47C4}.Debug|Any CPU.ActiveCfg = Debug
+		{564D4DFD-8A02-4B39-99F9-C03A87FF47C4}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

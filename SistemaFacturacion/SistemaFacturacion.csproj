@@ -33,6 +33,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.PointOfService, Version=1.14.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Microsoft Point Of Service\SDK\Microsoft.PointOfService.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.ReportViewer.Common, Version=12.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91" />
     <Reference Include="Microsoft.ReportViewer.WinForms, Version=12.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL" />
     <Reference Include="System" />
@@ -56,7 +60,11 @@
     <Compile Include="Classes\Conexion.cs" />
     <Compile Include="Classes\Facturas.cs" />
     <Compile Include="Classes\FuncionesGLobales.cs" />
+    <Compile Include="Classes\Print.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Classes\Productos.cs" />
+    <Compile Include="Classes\RawPrinterHelper.cs" />
     <Compile Include="Classes\TipoProducto.cs" />
     <Compile Include="Classes\TipoUnidad.cs" />
     <Compile Include="Classes\Usuarios.cs" />
@@ -215,9 +223,6 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <EmbeddedResource Include="Reportes\CuadreCaja.rdlc">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Reportes\Factura.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Reportes\FacturaCliente.rdlc">
@@ -405,6 +410,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\bill %281%29.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\key.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

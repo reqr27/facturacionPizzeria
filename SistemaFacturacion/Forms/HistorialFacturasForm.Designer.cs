@@ -125,6 +125,7 @@
             this.noFactura_txt.Name = "noFactura_txt";
             this.noFactura_txt.Size = new System.Drawing.Size(157, 22);
             this.noFactura_txt.TabIndex = 13;
+            this.noFactura_txt.Text = "0";
             this.noFactura_txt.TextChanged += new System.EventHandler(this.noFactura_txt_TextChanged);
             // 
             // label4
@@ -157,6 +158,7 @@
             this.cliente_txt.Name = "cliente_txt";
             this.cliente_txt.Size = new System.Drawing.Size(157, 22);
             this.cliente_txt.TabIndex = 18;
+            this.cliente_txt.TextChanged += new System.EventHandler(this.cliente_txt_TextChanged);
             // 
             // desde_dtp
             // 
@@ -168,6 +170,7 @@
             this.desde_dtp.Size = new System.Drawing.Size(107, 22);
             this.desde_dtp.TabIndex = 19;
             this.desde_dtp.Value = new System.DateTime(2017, 9, 15, 8, 0, 0, 0);
+            this.desde_dtp.ValueChanged += new System.EventHandler(this.desde_dtp_ValueChanged);
             // 
             // hasta_dtp
             // 
@@ -179,6 +182,7 @@
             this.hasta_dtp.Size = new System.Drawing.Size(107, 22);
             this.hasta_dtp.TabIndex = 20;
             this.hasta_dtp.Value = new System.DateTime(2017, 9, 15, 22, 0, 0, 0);
+            this.hasta_dtp.ValueChanged += new System.EventHandler(this.desde_dtp_ValueChanged);
             // 
             // verDetalles_btn
             // 

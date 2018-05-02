@@ -112,5 +112,23 @@ namespace SistemaFacturacion.Classes
             return time.Trim() + result.Trim();
         }
 
+        public string serialKeyActivation(int total)
+        {
+            string result = "none";
+            
+            int totalSumSerial = 10000 + Convert.ToInt16(DateTime.Now.Day) + Convert.ToInt16(DateTime.Now.Month) + Convert.ToInt16(DateTime.Now.Year);
+            int totalSumSerial2 = 5000 + Convert.ToInt16(DateTime.Now.Day) + Convert.ToInt16(DateTime.Now.Month) + Convert.ToInt16(DateTime.Now.Year);
+
+            if (totalSumSerial == total)
+            {
+                result = "Full";
+            }
+            else if(totalSumSerial2== total)
+            {
+                result = "Trial";
+            }
+            return result;
+        }
+
     }
 }

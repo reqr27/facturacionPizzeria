@@ -232,6 +232,14 @@ namespace SistemaFacturacion.Classes
             return dt = C.Listado("buscarProductoTerminado", lst);
         }
 
+        public DataTable BuscarProductosTerminadosFacturar()
+        {
+            DataTable dt = new DataTable();
+            List<clsParametros> lst = new List<clsParametros>();
+            lst.Add(new clsParametros("@producto", Mproducto));
+            return dt = C.Listado("obtenerProductoTerminadoFacturar", lst);
+        }
+
         public DataTable ObtenerUnidadComponente()
         {
             DataTable dt = new DataTable();
