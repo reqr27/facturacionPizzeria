@@ -157,6 +157,7 @@ namespace SistemaFacturacion.Forms
             U.ComponentesProductos = ingredientes_chbx.Checked;
             U.ReporteEntrada = reporteEntrada_chbx.Checked;
             U.ReporteSalida = reporteSalida_chbx.Checked;
+            U.EliminarFactura = eliminarFactura_radiobtn.Checked;
             msj = U.Registrar();
             if(msj == "1")
             {
@@ -195,6 +196,7 @@ namespace SistemaFacturacion.Forms
             U.ComponentesProductos = ingredientes_chbx.Checked;
             U.ReporteEntrada = reporteEntrada_chbx.Checked;
             U.ReporteSalida = reporteSalida_chbx.Checked;
+            U.EliminarFactura = eliminarFactura_radiobtn.Checked;
             msj = U.Actualizar();
             if (msj == "1")
             {
@@ -233,6 +235,7 @@ namespace SistemaFacturacion.Forms
             ingredientes_chbx.Checked = false;
             reporteEntrada_chbx.Checked = false;
             reporteSalida_chbx.Checked = false;
+            eliminarFactura_radiobtn.Checked = false;
             agregarEditarUsuario_btn.Text = "Registrar";
             Evento = false;
         }
@@ -261,7 +264,7 @@ namespace SistemaFacturacion.Forms
             ingredientes_chbx.Checked = Convert.ToBoolean(usuarios_dtg.CurrentRow.Cells[17].Value);
             reporteEntrada_chbx.Checked = Convert.ToBoolean(usuarios_dtg.CurrentRow.Cells[18].Value);
             reporteSalida_chbx.Checked = Convert.ToBoolean(usuarios_dtg.CurrentRow.Cells[19].Value);
-
+            eliminarFactura_radiobtn.Checked = Convert.ToBoolean(usuarios_dtg.CurrentRow.Cells[20].Value);
             cancelar_btn.Enabled = true;
             agregarEditarUsuario_btn.Text = "Actualizar";
             

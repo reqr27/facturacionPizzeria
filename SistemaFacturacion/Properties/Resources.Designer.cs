@@ -193,6 +193,16 @@ namespace SistemaFacturacion.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap circulo_de_suma {
+            get {
+                object obj = ResourceManager.GetObject("circulo-de-suma", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap cosecha {
             get {
                 object obj = ResourceManager.GetObject("cosecha", resourceCulture);

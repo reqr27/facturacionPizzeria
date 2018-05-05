@@ -390,5 +390,18 @@ namespace SistemaFacturacion.Classes
             return mensaje;
         }
 
+        public string SumarExistenciaBebida()
+        {
+            string mensaje = "";
+            List<clsParametros> lst = new List<clsParametros>();
+            lst.Add(new clsParametros("@mensaje", "", SqlDbType.VarChar, ParameterDirection.Output, 50));
+            lst.Add(new clsParametros("@idProducto", MidProducto));
+            lst.Add(new clsParametros("@cantidad", Mcantidad));
+
+            C.EjecutarSP("SumarExistenciaBebida", ref lst);
+            mensaje = lst[0].Valor.ToString();
+            return mensaje;
+        }
+
     }
 }

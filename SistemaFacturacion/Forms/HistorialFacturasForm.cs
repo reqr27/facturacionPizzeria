@@ -20,7 +20,7 @@ namespace SistemaFacturacion.Forms
         [System.Runtime.InteropServices.DllImportAttribute("user32.dll")]
         public static extern bool ReleaseCapture();
 
-
+        FuncionesGLobales FG = new FuncionesGLobales();
         Facturas F = new Facturas();
         Productos P = new Productos();
         public HistorialFacturasForm()
@@ -126,42 +126,58 @@ namespace SistemaFacturacion.Forms
 
         private void eliminar_btn_Click(object sender, EventArgs e)
         {
-            try
-            {
-                string val = "";
-                if (activas_radiobtn.Checked)
-                {
-                    Program.GfacturaId = Convert.ToInt32(historialFacturas_dtg.CurrentRow.Cells[0].Value);
-                    F.idFactura = Convert.ToInt32(historialFacturas_dtg.CurrentRow.Cells[0].Value);
-                    F.Estado = false;
-                    val = "Factura Cancelada!";
-                }
-                else
-                {
-                    F.idFactura = Convert.ToInt32(historialFacturas_dtg.CurrentRow.Cells[0].Value);
-                    F.Estado = true;
-                    val = "Factura Activada!";
+            bool permiso = FG.ValidarPermisoTransaccion("ELIMINAR FACTURA");
 
-                }
-                string msj = F.ActivarDesactivarFactura();
-                if (msj == "1")
+            if (permiso)
+            {
+                DialogResult dialogResult = MessageBox.Show("Desea Cancelar esta factura?", "Sistema Facturacion", MessageBoxButtons.YesNo);
+                if (dialogResult == DialogResult.Yes)
                 {
-                    MessageBox.Show(val, "Sistema Facturación", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    if(val == "Factura Cancelada!")
+                    try
                     {
-                        SumarExistenciaProductos();
+                        string val = "";
+                        if (activas_radiobtn.Checked)
+                        {
+                            Program.GfacturaId = Convert.ToInt32(historialFacturas_dtg.CurrentRow.Cells[0].Value);
+                            F.idFactura = Convert.ToInt32(historialFacturas_dtg.CurrentRow.Cells[0].Value);
+                            F.Estado = false;
+                            val = "Factura Cancelada!";
+                        }
+                        else
+                        {
+                            F.idFactura = Convert.ToInt32(historialFacturas_dtg.CurrentRow.Cells[0].Value);
+                            F.Estado = true;
+                            val = "Factura Activada!";
+
+                        }
+                        string msj = F.ActivarDesactivarFactura();
+                        if (msj == "1")
+                        {
+                            MessageBox.Show(val, "Sistema Facturación", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            if (val == "Factura Cancelada!")
+                            {
+                                SumarExistenciaProductos();
+                            }
+                        }
+                        else
+                        {
+                            MessageBox.Show("Factura no pudo ser modificada", "Sistema Facturación", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                        dtgHistorial();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
                     }
                 }
-                else
-                {
-                    MessageBox.Show("Factura no pudo ser modificada", "Sistema Facturación", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-                dtgHistorial();
             }
-            catch (Exception ex)
+            else
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show("Usuario no tiene permiso para esta acción", "Sistema Facturación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
             }
+
+
 
         }
 
@@ -182,6 +198,14 @@ namespace SistemaFacturacion.Forms
                     cantidadOrden  = Convert.ToInt32(dt.Rows[i]["CANTIDAD"]);
 
                     P.idProducto = Convert.ToInt32(dt.Rows[i]["IDPRODUCTO"]);
+
+                    P.Cantidad = cantidadOrden;
+                    string msj5 = P.SumarExistenciaBebida();
+                    if (msj5 =="0")
+                    {
+                        mensaje +=  "Producto Id = "+ Convert.ToInt32(dt.Rows[i]["IDPRODUCTO"]).ToString() + "no pudo ser sumado a existencia actual" + "\n";
+                    }
+
                     DataTable dt2 = new DataTable();
                     dt2 = P.ObtenerComponentesProducto();
                     if(dt2.Rows.Count > 0)

@@ -137,7 +137,7 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Bookman Old Style", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(367, 98);
+            this.label5.Location = new System.Drawing.Point(371, 71);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(164, 16);
             this.label5.TabIndex = 14;
@@ -147,10 +147,11 @@
             // 
             this.producto_lbl.AutoSize = true;
             this.producto_lbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.producto_lbl.Location = new System.Drawing.Point(361, 92);
+            this.producto_lbl.Location = new System.Drawing.Point(371, 93);
             this.producto_lbl.Name = "producto_lbl";
-            this.producto_lbl.Size = new System.Drawing.Size(0, 16);
+            this.producto_lbl.Size = new System.Drawing.Size(41, 16);
             this.producto_lbl.TabIndex = 15;
+            this.producto_lbl.Text = "Prod";
             // 
             // eliminar_btn
             // 

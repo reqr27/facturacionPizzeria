@@ -32,6 +32,7 @@ namespace SistemaFacturacion.Classes
         bool MrepEntrada;
         bool MrepSalida;
         string MtipoActivacion;
+        bool MeliminarFactura;
 
         public int idUsuario
         {
@@ -44,6 +45,13 @@ namespace SistemaFacturacion.Classes
             get { return Mfiltro; }
             set { Mfiltro = value; }
         }
+
+        public bool EliminarFactura
+        {
+            get { return MeliminarFactura; }
+            set { MeliminarFactura = value; }
+        }
+
 
         public bool Estado
         {
@@ -190,8 +198,9 @@ namespace SistemaFacturacion.Classes
             lst.Add(new clsParametros("@componente", McomponentesProductos));
             lst.Add(new clsParametros("@repEntrada", MrepEntrada));
             lst.Add(new clsParametros("@repSalida", MrepSalida));
+            lst.Add(new clsParametros("@eliminarFactura", MeliminarFactura));
 
-       
+
             C.EjecutarSP("insertarUsuarios", ref lst);
             mensaje = lst[0].Valor.ToString();
             return mensaje;
@@ -222,6 +231,7 @@ namespace SistemaFacturacion.Classes
             lst.Add(new clsParametros("@componentes", McomponentesProductos));
             lst.Add(new clsParametros("@repEntrada", MrepEntrada));
             lst.Add(new clsParametros("@repSalida", MrepSalida));
+            lst.Add(new clsParametros("@eliminarFactura", MeliminarFactura));
 
             C.EjecutarSP("actualizarUsuarios", ref lst);
             mensaje = lst[0].Valor.ToString();

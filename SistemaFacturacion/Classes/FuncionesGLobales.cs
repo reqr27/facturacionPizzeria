@@ -82,6 +82,11 @@ namespace SistemaFacturacion.Classes
                     acceso = Convert.ToBoolean(dt.Rows[0]["INGREDIENTES_PRODUCTOS"]);
                 }
 
+                else if (transaccion == "ELIMINAR FACTURA")
+                {
+                    acceso = Convert.ToBoolean(dt.Rows[0]["ELIMINAR_FACTURA"]);
+                }
+
                 else
                 {
                     acceso = Convert.ToBoolean(dt.Rows[0]["REPORTE_VENTAS"]);

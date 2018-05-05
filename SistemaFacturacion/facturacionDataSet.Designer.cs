@@ -792,7 +792,15 @@ namespace SistemaFacturacion {
             
             private global::System.Data.DataColumn columnefectivo;
             
-            private global::System.Data.DataColumn columndescuento_porciento;
+            private global::System.Data.DataColumn columnITBISTOTAL;
+            
+            private global::System.Data.DataColumn columnDIEZPORCLEY;
+            
+            private global::System.Data.DataColumn columnDESCUENTO;
+            
+            private global::System.Data.DataColumn columnTOTALPAGAR;
+            
+            private global::System.Data.DataColumn columnsubtototal;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
@@ -869,9 +877,41 @@ namespace SistemaFacturacion {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn descuento_porcientoColumn {
+            public global::System.Data.DataColumn ITBISTOTALColumn {
                 get {
-                    return this.columndescuento_porciento;
+                    return this.columnITBISTOTAL;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn DIEZPORCLEYColumn {
+                get {
+                    return this.columnDIEZPORCLEY;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn DESCUENTOColumn {
+                get {
+                    return this.columnDESCUENTO;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn TOTALPAGARColumn {
+                get {
+                    return this.columnTOTALPAGAR;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn subtototalColumn {
+                get {
+                    return this.columnsubtototal;
                 }
             }
             
@@ -912,7 +952,7 @@ namespace SistemaFacturacion {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public obtenerFacturaRow AddobtenerFacturaRow(System.DateTime fecha, string cliente, double total, double efectivo, double descuento_porciento) {
+            public obtenerFacturaRow AddobtenerFacturaRow(System.DateTime fecha, string cliente, double total, double efectivo, double ITBISTOTAL, decimal DIEZPORCLEY, double DESCUENTO, double TOTALPAGAR, double subtototal) {
                 obtenerFacturaRow rowobtenerFacturaRow = ((obtenerFacturaRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         null,
@@ -920,7 +960,11 @@ namespace SistemaFacturacion {
                         cliente,
                         total,
                         efectivo,
-                        descuento_porciento};
+                        ITBISTOTAL,
+                        DIEZPORCLEY,
+                        DESCUENTO,
+                        TOTALPAGAR,
+                        subtototal};
                 rowobtenerFacturaRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowobtenerFacturaRow);
                 return rowobtenerFacturaRow;
@@ -955,7 +999,11 @@ namespace SistemaFacturacion {
                 this.columncliente = base.Columns["cliente"];
                 this.columntotal = base.Columns["total"];
                 this.columnefectivo = base.Columns["efectivo"];
-                this.columndescuento_porciento = base.Columns["descuento_porciento"];
+                this.columnITBISTOTAL = base.Columns["ITBISTOTAL"];
+                this.columnDIEZPORCLEY = base.Columns["DIEZPORCLEY"];
+                this.columnDESCUENTO = base.Columns["DESCUENTO"];
+                this.columnTOTALPAGAR = base.Columns["TOTALPAGAR"];
+                this.columnsubtototal = base.Columns["subtototal"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -971,8 +1019,16 @@ namespace SistemaFacturacion {
                 base.Columns.Add(this.columntotal);
                 this.columnefectivo = new global::System.Data.DataColumn("efectivo", typeof(double), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnefectivo);
-                this.columndescuento_porciento = new global::System.Data.DataColumn("descuento_porciento", typeof(double), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columndescuento_porciento);
+                this.columnITBISTOTAL = new global::System.Data.DataColumn("ITBISTOTAL", typeof(double), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnITBISTOTAL);
+                this.columnDIEZPORCLEY = new global::System.Data.DataColumn("DIEZPORCLEY", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnDIEZPORCLEY);
+                this.columnDESCUENTO = new global::System.Data.DataColumn("DESCUENTO", typeof(double), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnDESCUENTO);
+                this.columnTOTALPAGAR = new global::System.Data.DataColumn("TOTALPAGAR", typeof(double), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnTOTALPAGAR);
+                this.columnsubtototal = new global::System.Data.DataColumn("subtototal", typeof(double), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnsubtototal);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
                                 this.columnid}, true));
                 this.columnid.AutoIncrement = true;
@@ -983,6 +1039,11 @@ namespace SistemaFacturacion {
                 this.columncliente.AllowDBNull = false;
                 this.columncliente.MaxLength = 100;
                 this.columntotal.AllowDBNull = false;
+                this.columnITBISTOTAL.ReadOnly = true;
+                this.columnDIEZPORCLEY.ReadOnly = true;
+                this.columnDESCUENTO.ReadOnly = true;
+                this.columnTOTALPAGAR.ReadOnly = true;
+                this.columnsubtototal.ReadOnly = true;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -2955,17 +3016,81 @@ namespace SistemaFacturacion {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public double descuento_porciento {
+            public double ITBISTOTAL {
                 get {
                     try {
-                        return ((double)(this[this.tableobtenerFactura.descuento_porcientoColumn]));
+                        return ((double)(this[this.tableobtenerFactura.ITBISTOTALColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'descuento_porciento\' in table \'obtenerFactura\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'ITBISTOTAL\' in table \'obtenerFactura\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tableobtenerFactura.descuento_porcientoColumn] = value;
+                    this[this.tableobtenerFactura.ITBISTOTALColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public decimal DIEZPORCLEY {
+                get {
+                    try {
+                        return ((decimal)(this[this.tableobtenerFactura.DIEZPORCLEYColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'DIEZPORCLEY\' in table \'obtenerFactura\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableobtenerFactura.DIEZPORCLEYColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public double DESCUENTO {
+                get {
+                    try {
+                        return ((double)(this[this.tableobtenerFactura.DESCUENTOColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'DESCUENTO\' in table \'obtenerFactura\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableobtenerFactura.DESCUENTOColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public double TOTALPAGAR {
+                get {
+                    try {
+                        return ((double)(this[this.tableobtenerFactura.TOTALPAGARColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'TOTALPAGAR\' in table \'obtenerFactura\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableobtenerFactura.TOTALPAGARColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public double subtototal {
+                get {
+                    try {
+                        return ((double)(this[this.tableobtenerFactura.subtototalColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'subtototal\' in table \'obtenerFactura\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableobtenerFactura.subtototalColumn] = value;
                 }
             }
             
@@ -2983,14 +3108,62 @@ namespace SistemaFacturacion {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool Isdescuento_porcientoNull() {
-                return this.IsNull(this.tableobtenerFactura.descuento_porcientoColumn);
+            public bool IsITBISTOTALNull() {
+                return this.IsNull(this.tableobtenerFactura.ITBISTOTALColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void Setdescuento_porcientoNull() {
-                this[this.tableobtenerFactura.descuento_porcientoColumn] = global::System.Convert.DBNull;
+            public void SetITBISTOTALNull() {
+                this[this.tableobtenerFactura.ITBISTOTALColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsDIEZPORCLEYNull() {
+                return this.IsNull(this.tableobtenerFactura.DIEZPORCLEYColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetDIEZPORCLEYNull() {
+                this[this.tableobtenerFactura.DIEZPORCLEYColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsDESCUENTONull() {
+                return this.IsNull(this.tableobtenerFactura.DESCUENTOColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetDESCUENTONull() {
+                this[this.tableobtenerFactura.DESCUENTOColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsTOTALPAGARNull() {
+                return this.IsNull(this.tableobtenerFactura.TOTALPAGARColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetTOTALPAGARNull() {
+                this[this.tableobtenerFactura.TOTALPAGARColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IssubtototalNull() {
+                return this.IsNull(this.tableobtenerFactura.subtototalColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetsubtototalNull() {
+                this[this.tableobtenerFactura.subtototalColumn] = global::System.Convert.DBNull;
             }
         }
         
@@ -4277,7 +4450,11 @@ namespace SistemaFacturacion.facturacionDataSetTableAdapters {
             tableMapping.ColumnMappings.Add("cliente", "cliente");
             tableMapping.ColumnMappings.Add("total", "total");
             tableMapping.ColumnMappings.Add("efectivo", "efectivo");
-            tableMapping.ColumnMappings.Add("descuento_porciento", "descuento_porciento");
+            tableMapping.ColumnMappings.Add("ITBISTOTAL", "ITBISTOTAL");
+            tableMapping.ColumnMappings.Add("DIEZPORCLEY", "DIEZPORCLEY");
+            tableMapping.ColumnMappings.Add("DESCUENTO", "DESCUENTO");
+            tableMapping.ColumnMappings.Add("TOTALPAGAR", "TOTALPAGAR");
+            tableMapping.ColumnMappings.Add("subtototal", "subtototal");
             this._adapter.TableMappings.Add(tableMapping);
         }
         

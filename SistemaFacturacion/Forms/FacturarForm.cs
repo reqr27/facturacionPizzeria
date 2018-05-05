@@ -10,7 +10,7 @@ using System.Windows.Forms;
 using SistemaFacturacion.Classes;
 using System.Runtime.InteropServices;
 using Microsoft.PointOfService;
-
+using System.Drawing.Printing;
 
 namespace SistemaFacturacion.Forms
 {
@@ -31,7 +31,7 @@ namespace SistemaFacturacion.Forms
         private void FacturarForm_Load(object sender, EventArgs e)
         {
             //explorer = new PosExplorer();
-            //DeviceInfo ObjDevicesInfo = explorer.GetDevice("CashDrawer");
+            //DeviceInfo ObjDevicesInfo = explorer.GetDevice("CashDrawer", "LOGICAL DEVICE NAME for your cash drawer");
             //myCashDrawer = (CashDrawer)explorer.CreateInstance(ObjDevicesInfo);
 
             numeroFactura_txt.Text = (Convert.ToInt32(F.NumeroFacturaSiguiente())).ToString("0000000");
@@ -188,9 +188,10 @@ namespace SistemaFacturacion.Forms
 
                 }
                 total_lbl.Text = total.ToString("N2");
-                
-
-                totalPagar_lbl.Text = (total - (total * porcentage)).ToString("N2");
+                double porc_ley = (total * 0.10);
+                porcLey_lbl.Text = porc_ley.ToString("N2");
+               
+                totalPagar_lbl.Text = ( (total + porc_ley) - ((total + porc_ley) * porcentage)).ToString("N2");
                 totalPagar2_lbl.Text = totalPagar_lbl.Text;
                 efectivo_txt.Text = totalPagar_lbl.Text;
                 devuelta_lbl.Text = (Convert.ToDouble(totalPagar_lbl.Text) - Convert.ToDouble(efectivo_txt.Text)).ToString("N2");
@@ -204,9 +205,10 @@ namespace SistemaFacturacion.Forms
                 devuelta_lbl.Text = "0.00";
                 totalPagar_lbl.Text = "0.00";
                 descuento_lbl.Text = "0.00";
+                porcLey_lbl.Text = "0.00";
             }
 
-            double descuento_dinero = Convert.ToDouble(total_lbl.Text) * Convert.ToDouble(descuento_txt.Text) / 100;
+            double descuento_dinero = (Convert.ToDouble(total_lbl.Text) + Convert.ToDouble(porcLey_lbl.Text)) * porcentage;
             descuento_lbl.Text = descuento_dinero.ToString("N2");
         }
 
@@ -303,6 +305,7 @@ namespace SistemaFacturacion.Forms
                     Program.ReporteMetodo = "FacturaCliente";
                     ReportesForm form = new ReportesForm();
                     form.Show();
+                    openCashDrawer();
                     
 
                 }
@@ -896,13 +899,22 @@ namespace SistemaFacturacion.Forms
 
         private void openCashDrawer()
         {
-            //Metodo 1
-            byte[] codeOpenCashDrawer = new byte[] { 27, 112, 48, 55, 121 };
-            IntPtr pUnmanagedBytes = new IntPtr(0);
-            pUnmanagedBytes = Marshal.AllocCoTaskMem(5);
-            Marshal.Copy(codeOpenCashDrawer, 0, pUnmanagedBytes, 5);
-            RawPrinterHelper.SendBytesToPrinter("EPSON TM-T88V Receipt Invoice", pUnmanagedBytes, 5);
-            Marshal.FreeCoTaskMem(pUnmanagedBytes);
+            try
+            {
+                PrinterSettings settings = new PrinterSettings();
+                //Metodo 1
+                byte[] codeOpenCashDrawer = new byte[] { 27, 112, 0, 25, 250 };
+                IntPtr pUnmanagedBytes = new IntPtr(0);
+                pUnmanagedBytes = Marshal.AllocCoTaskMem(5);
+                Marshal.Copy(codeOpenCashDrawer, 0, pUnmanagedBytes, 5);
+                RawPrinterHelper.SendBytesToPrinter(settings.PrinterName, pUnmanagedBytes, 5);
+                Marshal.FreeCoTaskMem(pUnmanagedBytes);
+            }
+            catch
+            {
+                MessageBox.Show("No se pudo abrir Caja Registradora, abrir de manera manual", "Sistema Facturación", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            
             
 
         }

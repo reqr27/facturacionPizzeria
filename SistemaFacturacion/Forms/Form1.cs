@@ -76,11 +76,14 @@ namespace SistemaFacturacion
 
         private void entradaProductos_btn_Click(object sender, EventArgs e)
         {
+
+
             bool permisoentrada = FG.ValidarPermisoTransaccion("ENTRADA PRODUCTOS");
             bool permisosalida = FG.ValidarPermisoTransaccion("SALIDA PRODUCTOS");
 
             if (permisoentrada || permisosalida)
             {
+
                 EntradaProductosForm form = new EntradaProductosForm();
                 form.ShowDialog();
             }
@@ -94,12 +97,26 @@ namespace SistemaFacturacion
 
         private void facturacion_btn_Click(object sender, EventArgs e)
         {
+            
+
             bool permiso = FG.ValidarPermisoTransaccion("FACTURACION");
 
             if (permiso)
             {
-                FacturarForm form = new FacturarForm();
-                form.Show();
+
+                Form fc = Application.OpenForms["FacturarForm"];
+                if (fc != null)
+                {
+                    fc.BringToFront();
+                    fc.WindowState = FormWindowState.Normal;
+                }
+                else
+                {
+                    FacturarForm frm = new FacturarForm();
+                    frm.Show();
+                }
+
+               
             }
 
             else
@@ -184,21 +201,45 @@ namespace SistemaFacturacion
 
         private void config_btn_Click(object sender, EventArgs e)
         {
-            ConfiguracionesForm frm = new ConfiguracionesForm();
-            frm.Show();
+            Form fc = Application.OpenForms["ConfiguracionesForm"];
+            if (fc != null)
+            {
+                fc.BringToFront();
+                fc.WindowState = FormWindowState.Normal;
+            }
+            else
+            {
+                ConfiguracionesForm frm = new ConfiguracionesForm();
+                frm.Show();
+            }
+
+            
         }
 
         private void reportes_btn_Click(object sender, EventArgs e)
         {
-            VentanaReportesForm frm = new VentanaReportesForm();
-            frm.Show();
+
+            Form fc = Application.OpenForms["VentanaReportesForm"];
+            if (fc != null)
+            {
+                fc.BringToFront();
+                fc.WindowState = FormWindowState.Normal;
+            }
+            else
+            {
+                VentanaReportesForm frm = new VentanaReportesForm();
+                frm.Show();
+            }
+
+           
         }
 
         private void cuadreDiario_btn_Click_1(object sender, EventArgs e)
         {
-            bool permiso = FG.ValidarPermisoTransaccion("CUADRE DIARIO");
+            bool permiso = FG.ValidarPermisoTransaccion("CUADRE");
             if (permiso)
             {
+
                 Program.ReporteMetodo = "Cuadre Caja";
                 ReportesForm form = new ReportesForm();
                 form.Show();

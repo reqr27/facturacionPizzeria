@@ -65,6 +65,7 @@
             this.button2 = new System.Windows.Forms.Button();
             this.label27 = new System.Windows.Forms.Label();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+            this.eliminarFactura_radiobtn = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.usuarios_dtg)).BeginInit();
             this.panel3.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
@@ -169,7 +170,7 @@
             // 
             this.reporteSalida_chbx.AutoSize = true;
             this.reporteSalida_chbx.Font = new System.Drawing.Font("Bookman Old Style", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.reporteSalida_chbx.Location = new System.Drawing.Point(378, 3);
+            this.reporteSalida_chbx.Location = new System.Drawing.Point(363, 51);
             this.reporteSalida_chbx.Name = "reporteSalida_chbx";
             this.reporteSalida_chbx.Size = new System.Drawing.Size(121, 18);
             this.reporteSalida_chbx.TabIndex = 20;
@@ -180,7 +181,7 @@
             // 
             this.reporteEntrada_chbx.AutoSize = true;
             this.reporteEntrada_chbx.Font = new System.Drawing.Font("Bookman Old Style", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.reporteEntrada_chbx.Location = new System.Drawing.Point(192, 147);
+            this.reporteEntrada_chbx.Location = new System.Drawing.Point(363, 27);
             this.reporteEntrada_chbx.Name = "reporteEntrada_chbx";
             this.reporteEntrada_chbx.Size = new System.Drawing.Size(133, 18);
             this.reporteEntrada_chbx.TabIndex = 19;
@@ -191,7 +192,7 @@
             // 
             this.ingredientes_chbx.AutoSize = true;
             this.ingredientes_chbx.Font = new System.Drawing.Font("Bookman Old Style", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ingredientes_chbx.Location = new System.Drawing.Point(192, 123);
+            this.ingredientes_chbx.Location = new System.Drawing.Point(363, 3);
             this.ingredientes_chbx.Name = "ingredientes_chbx";
             this.ingredientes_chbx.Size = new System.Drawing.Size(180, 18);
             this.ingredientes_chbx.TabIndex = 18;
@@ -202,7 +203,7 @@
             // 
             this.salidaProductos_chbx.AutoSize = true;
             this.salidaProductos_chbx.Font = new System.Drawing.Font("Bookman Old Style", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.salidaProductos_chbx.Location = new System.Drawing.Point(192, 99);
+            this.salidaProductos_chbx.Location = new System.Drawing.Point(192, 123);
             this.salidaProductos_chbx.Name = "salidaProductos_chbx";
             this.salidaProductos_chbx.Size = new System.Drawing.Size(137, 18);
             this.salidaProductos_chbx.TabIndex = 17;
@@ -213,7 +214,7 @@
             // 
             this.repVentas_chbx.AutoSize = true;
             this.repVentas_chbx.Font = new System.Drawing.Font("Bookman Old Style", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.repVentas_chbx.Location = new System.Drawing.Point(192, 75);
+            this.repVentas_chbx.Location = new System.Drawing.Point(192, 99);
             this.repVentas_chbx.Name = "repVentas_chbx";
             this.repVentas_chbx.Size = new System.Drawing.Size(126, 18);
             this.repVentas_chbx.TabIndex = 16;
@@ -224,7 +225,7 @@
             // 
             this.repCuadre_chbx.AutoSize = true;
             this.repCuadre_chbx.Font = new System.Drawing.Font("Bookman Old Style", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.repCuadre_chbx.Location = new System.Drawing.Point(192, 51);
+            this.repCuadre_chbx.Location = new System.Drawing.Point(192, 75);
             this.repCuadre_chbx.Name = "repCuadre_chbx";
             this.repCuadre_chbx.Size = new System.Drawing.Size(76, 18);
             this.repCuadre_chbx.TabIndex = 15;
@@ -235,7 +236,7 @@
             // 
             this.repExistencia_chbx.AutoSize = true;
             this.repExistencia_chbx.Font = new System.Drawing.Font("Bookman Old Style", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.repExistencia_chbx.Location = new System.Drawing.Point(192, 27);
+            this.repExistencia_chbx.Location = new System.Drawing.Point(192, 51);
             this.repExistencia_chbx.Name = "repExistencia_chbx";
             this.repExistencia_chbx.Size = new System.Drawing.Size(151, 18);
             this.repExistencia_chbx.TabIndex = 14;
@@ -246,7 +247,7 @@
             // 
             this.historialFacturas_chbx.AutoSize = true;
             this.historialFacturas_chbx.Font = new System.Drawing.Font("Bookman Old Style", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.historialFacturas_chbx.Location = new System.Drawing.Point(192, 3);
+            this.historialFacturas_chbx.Location = new System.Drawing.Point(192, 27);
             this.historialFacturas_chbx.Name = "historialFacturas_chbx";
             this.historialFacturas_chbx.Size = new System.Drawing.Size(165, 18);
             this.historialFacturas_chbx.TabIndex = 13;
@@ -257,7 +258,7 @@
             // 
             this.Entrada_chbx.AutoSize = true;
             this.Entrada_chbx.Font = new System.Drawing.Font("Bookman Old Style", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Entrada_chbx.Location = new System.Drawing.Point(3, 147);
+            this.Entrada_chbx.Location = new System.Drawing.Point(192, 3);
             this.Entrada_chbx.Name = "Entrada_chbx";
             this.Entrada_chbx.Size = new System.Drawing.Size(149, 18);
             this.Entrada_chbx.TabIndex = 11;
@@ -480,11 +481,23 @@
             this.flowLayoutPanel1.Controls.Add(this.ingredientes_chbx);
             this.flowLayoutPanel1.Controls.Add(this.reporteEntrada_chbx);
             this.flowLayoutPanel1.Controls.Add(this.reporteSalida_chbx);
+            this.flowLayoutPanel1.Controls.Add(this.eliminarFactura_radiobtn);
             this.flowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(361, 75);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             this.flowLayoutPanel1.Size = new System.Drawing.Size(431, 161);
             this.flowLayoutPanel1.TabIndex = 93;
+            // 
+            // eliminarFactura_radiobtn
+            // 
+            this.eliminarFactura_radiobtn.AutoSize = true;
+            this.eliminarFactura_radiobtn.Font = new System.Drawing.Font("Bookman Old Style", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.eliminarFactura_radiobtn.Location = new System.Drawing.Point(363, 75);
+            this.eliminarFactura_radiobtn.Name = "eliminarFactura_radiobtn";
+            this.eliminarFactura_radiobtn.Size = new System.Drawing.Size(145, 18);
+            this.eliminarFactura_radiobtn.TabIndex = 21;
+            this.eliminarFactura_radiobtn.Text = "Eliminar Facturas";
+            this.eliminarFactura_radiobtn.UseVisualStyleBackColor = true;
             // 
             // UsuariosForm
             // 
@@ -564,5 +577,6 @@
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Label label27;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
+        private System.Windows.Forms.CheckBox eliminarFactura_radiobtn;
     }
 }

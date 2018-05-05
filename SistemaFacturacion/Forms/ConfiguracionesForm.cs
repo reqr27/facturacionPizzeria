@@ -40,8 +40,18 @@ namespace SistemaFacturacion.Forms
 
             if (permiso)
             {
-                ProductoForm form = new ProductoForm();
-                form.ShowDialog();
+               
+                Form fc = Application.OpenForms[" ProductoForm"];
+                if (fc != null)
+                {
+                    fc.BringToFront();
+                    fc.WindowState = FormWindowState.Normal;
+                }
+                else
+                {
+                    ProductoForm frm = new ProductoForm();
+                    frm.ShowDialog();
+                }
             }
 
             else

@@ -37,8 +37,7 @@ namespace SistemaFacturacion.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=DESKTOP-CN50973;Initial Catalog=facturacion;User ID=sa;Password=12345" +
-            "678")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=localhost;Initial Catalog=facturacion;User ID=sa;Password=12345678")]
         public string facturacionConnectionString {
             get {
                 return ((string)(this["facturacionConnectionString"]));
